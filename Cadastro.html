@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Registro Paciente e Medicamentos</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      margin: 0;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .btn-topo {
+      background: #1976d2;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-bottom: 20px;
+      font-weight: bold;
+    }
+
+    .btn-topo:hover {
+      background: #0d47a1;
+    }
+
+    .form-container {
+      background: white;
+      width: 500px;
+      margin: 20px auto;
+      border-radius: 8px;
+      box-shadow: 0px 3px 8px rgba(0,0,0,0.2);
+      padding: 20px;
+    }
+
+    .form-container h2 {
+      background: #0288d1;
+      color: white;
+      margin: -20px -20px 20px -20px;
+      padding: 15px;
+      border-radius: 8px 8px 0 0;
+      font-size: 18px;
+    }
+
+    .form-group {
+      margin: 15px 0;
+      text-align: left;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    .form-group input, .form-group select {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    .btn-registrar {
+      background: #2e7d32;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    .btn-registrar:hover {
+      background: #1b5e20;
+    }
+
+    .resultado {
+      margin-top: 10px;
+      font-weight: bold;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Botão Voltar -->
+  <button class="btn-topo" onclick="voltarControle()">Voltar para Controle</button>
+
+  <!-- Formulário Paciente -->
+  <div class="form-container">
+    <h2>INFORME SEUS DADOS</h2>
+    <div class="form-group">
+      <label for="nomePaciente">Nome:</label>
+      <input type="text" id="nomePaciente">
+    </div>
+    <div class="form-group">
+      <label for="idadePaciente">Idade:</label>
+      <input type="number" id="idadePaciente">
+    </div>
+    <div class="form-group">
+      <label for="pesoPaciente">Peso:</label>
+      <input type="number" id="pesoPaciente">
+    </div>
+    <div class="form-group">
+      <label for="alturaPaciente">Altura:</label>
+      <input type="number" id="alturaPaciente">
+    </div>
+    <div class="form-group">
+      <label for="sexoPaciente">Sexo:</label>
+      <select id="sexoPaciente">
+        <option value="">Selecione</option>
+        <option value="masculino">Masculino</option>
+        <option value="feminino">Feminino</option>
+      </select>
+    </div>
+    <button class="btn-registrar" onclick="registrarPaciente()">Registrar Paciente</button>
+    <div id="resultadoPaciente" class="resultado"></div>
+  </div>
+
+  <!-- Formulário Medicamentos -->
+  <div class="form-container">
+    <h2>INFORME SEUS MEDICAMENTOS</h2>
+    <div class="form-group">
+      <label for="nomeMedicamento">Nome:</label>
+      <input type="text" id="nomeMedicamento">
+    </div>
+    <div class="form-group">
+      <label for="dosagemMedicamento">Dosagem:</label>
+      <input type="number" id="dosagemMedicamento">
+    </div>
+    <div class="form-group">
+      <label for="tipoMedicamento">Tipo:</label>
+      <select id="tipoMedicamento">
+        <option value="">Selecione</option>
+        <option value="Comprimido">Comprimido</option>
+        <option value="Injeção">Injeção</option>
+        <option value="Cápsula">Cápsula</option>
+        <option value="Outro">Outro</option>
+      </select>
+    </div>
+    <button class="btn-registrar" onclick="registrarMedicamento()">Registrar Medicamento</button>
+    <div id="resultadoMedicamento" class="resultado"></div>
+  </div>
+
+  <script>
+    function voltarControle() {
+      alert("Voltando para a tela de controle... (aqui você pode redirecionar para a página principal)");
+      window.location.href = "index.html";
+    }
+
+    function registrarPaciente() {
+      const nome = document.getElementById("nomePaciente").value;
+      const idade = document.getElementById("idadePaciente").value;
+      const peso = document.getElementById("pesoPaciente").value;
+      const altura = document.getElementById("alturaPaciente").value;
+      const sexo = document.getElementById("sexoPaciente").value;
+
+      if (!nome || !idade || !peso || !altura || !sexo) {
+        document.getElementById("resultadoPaciente").innerText = "⚠️ Preencha todos os campos!";
+        document.getElementById("resultadoPaciente").style.color = "red";
+        return;
+      }
+
+      document.getElementById("resultadoPaciente").style.color = "green";
+      document.getElementById("resultadoPaciente").innerText =
+        `✅ Paciente ${nome} registrado com sucesso!`;
+    }
+
+    function registrarMedicamento() {
+      const nome = document.getElementById("nomeMedicamento").value;
+      const dosagem = document.getElementById("dosagemMedicamento").value;
+      const tipo = document.getElementById("tipoMedicamento").value;
+
+      if (!nome || !dosagem || !tipo) {
+        document.getElementById("resultadoMedicamento").innerText = "⚠️ Preencha todos os campos!";
+        document.getElementById("resultadoMedicamento").style.color = "red";
+        return;
+      }
+
+      document.getElementById("resultadoMedicamento").style.color = "green";
+      document.getElementById("resultadoMedicamento").innerText =
+        `✅ Medicamento ${nome} (${dosagem} mg - ${tipo}) registrado com sucesso!`;
+    }
+  </script>
+
+</body>
+</html>
