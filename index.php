@@ -50,7 +50,7 @@ include_once("./php/conexao.php");
         }
 
         .grafico h2 {
-            background: #6a1b9a;
+            background: #0097a7;
         }
 
         table {

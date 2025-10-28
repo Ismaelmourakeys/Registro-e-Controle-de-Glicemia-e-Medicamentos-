@@ -1,27 +1,25 @@
 <?php
-include_once("./conexao.php");
+include_once("conexao.php");
 
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $paciente_ID_PC = $_POST["paciente_ID_PC"] ?? "";
-    $glicemia = $_POST["GLICEMIA"] ?? "";
-    $data = $_POST["data"] ?? "";
-    $hora = $_POST["hora"] ?? "";
+$paciente = $_POST['paciente_ID_PC'] ?? '';
+$vlglic = $_POST['GLICEMIA'] ?? '';
+$data = $_POST['data'] ?? '';
+$hora = $_POST['hora'] ?? '';
 
-    if ($paciente_ID_PC && $glicemia && $data && $hora) {
-        $stmt = $conexao->prepare("INSERT INTO glicemia (paciente_ID_PC, GLICEMIA, DATA, HORA) VALUES (?, ?, ?, ?)");
-        $stmt->bind_param("idss", $paciente_ID_PC, $glicemia, $data, $hora);
-
-        if ($stmt->execute()) {
-            echo "✅ Glicemia registrada com sucesso!";
-        } else {
-            echo "❌ Erro ao registrar: " . $conexao->error;
-        }
-
-        $stmt->close();
-    } else {
-        echo "⚠️ Dados incompletos!";
-    }
-} else {
-    echo "Método inválido!";
+if (!$paciente || !$vlglic || !$data || !$hora) {
+    echo "❌ Dados incompletos!";
+    exit;
 }
+
+$stmt = $conexao->prepare("INSERT INTO controle_dt (PACIENTE_ID_PC, GLICOSE, DATA, HORA) VALUES (?, ?, ?, ?)");
+$stmt->bind_param("idss", $paciente, $vlglic, $data, $hora);
+
+if ($stmt->execute()) {
+    echo "✅ Registro salvo com sucesso!";
+} else {
+    echo "❌ Erro ao salvar registro: " . $stmt->error;
+}
+
+$stmt->close();
+$conexao->close();
 ?>
