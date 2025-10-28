@@ -1,29 +1,27 @@
 <?php
-include_once("conexao.php");
+include_once("./conexao.php");
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $pacienteID = $_POST['paciente_ID_PC'] ?? '';
-    $vlglic = $_POST['GLICEMIA'] ?? '';
-    $data = $_POST['data'] ?? '';
-    $hora = $_POST['hora'] ?? '';
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $paciente_ID_PC = $_POST["paciente_ID_PC"] ?? "";
+    $glicemia = $_POST["GLICEMIA"] ?? "";
+    $data = $_POST["data"] ?? "";
+    $hora = $_POST["hora"] ?? "";
 
-    if (!$pacienteID || !$vlglic || !$data || !$hora) {
-        echo "⚠️ Todos os campos são obrigatórios!";
-        exit;
-    }
+    if ($paciente_ID_PC && $glicemia && $data && $hora) {
+        $stmt = $conexao->prepare("INSERT INTO glicemia (paciente_ID_PC, GLICEMIA, DATA, HORA) VALUES (?, ?, ?, ?)");
+        $stmt->bind_param("idss", $paciente_ID_PC, $glicemia, $data, $hora);
 
-    $stmt = $conexao->prepare("INSERT INTO controle_dt (GLICOSE, paciente_ID_PC, Date) VALUES (?, ?, CONCAT(?, ' ', ?))");
-    $stmt->bind_param("diis", $vlglic, $pacienteID, $data, $hora);
+        if ($stmt->execute()) {
+            echo "✅ Glicemia registrada com sucesso!";
+        } else {
+            echo "❌ Erro ao registrar: " . $conexao->error;
+        }
 
-    if ($stmt->execute()) {
-        echo "✅ Glicemia registrada com sucesso!";
+        $stmt->close();
     } else {
-        echo "❌ Erro ao tentar cadastrar registro: " . $stmt->error;
+        echo "⚠️ Dados incompletos!";
     }
-
-    $stmt->close();
-    $conexao->close();
 } else {
-    echo "⚠️ Requisição inválida!";
+    echo "Método inválido!";
 }
 ?>

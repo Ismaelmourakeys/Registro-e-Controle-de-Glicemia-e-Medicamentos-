@@ -12,8 +12,20 @@ $result = $conexao->query($sql);
 <meta charset="UTF-8">
 <title>Registrar Glicemia</title>
 <style>
-body { font-family: Arial; background:#f8f8f8; padding:20px; text-align:center; }
-.form-container { background:white; width:500px; margin:auto; padding:20px; border-radius:8px; box-shadow:0 3px 8px rgba(0,0,0,0.2);}
+body { 
+    font-family: Arial; 
+    background:#f8f8f8; 
+    padding:20px; 
+    text-align:center; 
+}
+.form-container { 
+    background:white; 
+    width:500px; 
+    margin:auto; 
+    padding:20px; 
+    border-radius:8px; 
+    box-shadow:0 3px 8px rgba(0,0,0,0.2);
+}
 .form-container h2 { background:#0288d1; color:white; padding:15px; border-radius:8px 8px 0 0; margin:-20px -20px 20px -20px;}
 .form-group { margin:15px 0; text-align:left; }
 .form-group label { display:block; margin-bottom:5px; font-weight:bold; }
@@ -21,6 +33,8 @@ body { font-family: Arial; background:#f8f8f8; padding:20px; text-align:center; 
 .btn-registrar { background:#2e7d32; color:white; padding:10px 20px; border:none; border-radius:5px; cursor:pointer; font-weight:bold; margin-top:10px; }
 .btn-registrar:hover { background:#1b5e20; }
 .resultado { margin-top:15px; font-weight:bold; color:#333; }
+.btn-voltar { display:inline-block; margin-top:20px; text-decoration:none; color:#0288d1; font-weight:bold; }
+.btn-voltar:hover { text-decoration:underline; }
 </style>
 </head>
 <body>
@@ -61,6 +75,8 @@ body { font-family: Arial; background:#f8f8f8; padding:20px; text-align:center; 
 <button class="btn-registrar" onclick="registrarGlicemia()">Registrar</button>
 <div id="resultado" class="resultado"></div>
 </div>
+
+<a class="btn-voltar" href="index.php">Voltar a tela de controle</a>
 
 <script>
 function registrarGlicemia() {
