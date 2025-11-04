@@ -118,13 +118,14 @@ ID_PC`,
 -- Índices para tabelas despejadas
 --
 CREATE TABLE glicemia (
-  ID_GLIC INT AUTO_INCREMENT PRIMARY KEY,
-  paciente_ID_PC INT NOT NULL,
-  GLICEMIA DECIMAL(6,2) NOT NULL,
-  DATA DATE NOT NULL,
-  HORA TIME NOT NULL,
-  FOREIGN KEY (paciente_ID_PC) REFERENCES paciente(ID_PC)
+    ID_GLICEMIA INT AUTO_INCREMENT PRIMARY KEY,
+    paciente_ID_PC INT NOT NULL,
+    GLICEMIA DECIMAL(5,2) NOT NULL,
+    DATA_MEDICAO DATE NOT NULL,
+    HORA_MEDICAO TIME NOT NULL
 );
+
+
 
   --
   -- Índices para tabela `controle_dt`

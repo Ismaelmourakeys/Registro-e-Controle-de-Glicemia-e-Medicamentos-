@@ -152,7 +152,7 @@ include_once("./php/conexao.php");
         <input type="text" id="nomeBusca" placeholder="Digite o nome do paciente" required>
         <button type="submit" class="btn">Buscar Glicemia</button>
     </form>
-    <canvas id="graficoGlicemia" height="100"></canvas>
+    <canvas id="graficoGlicemia" width="400" height="100"></canvas>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -167,21 +167,6 @@ function Cadastro() {
     window.location.href = "Cadastro.html";
 }
 
-function buscarMedicamentos(id) {
-    const pacienteNome = document.querySelector(`tr[onclick="buscarMedicamentos(${id})"] td`).innerText;
-    fetch(`./php/buscar_medicamento.php?id=${encodeURIComponent(id)}`)
-        .then(r => r.text())
-        .then(html => {
-            const container = document.querySelector('.medicamentos');
-            if (!container) return alert('Container de medicamentos não encontrado.');
-            container.innerHTML = "<h2>Medicamentos de " +  pacienteNome  + "</h2>" + html + "<button class='btn' onclick='Cadastro()'>Registros Paciente/Medicamentos</button>";
-        })
-        .catch(err => {
-            console.error(err);
-            alert('Erro ao buscar medicamentos (veja console).');
-        });
-}
-
 // Gráfico dinâmico de glicemia
 let chartGlicemia;
 document.getElementById('formBuscaGlicemia').addEventListener('submit', async function(e){
@@ -194,6 +179,11 @@ document.getElementById('formBuscaGlicemia').addEventListener('submit', async fu
     const ctx = document.getElementById('graficoGlicemia').getContext('2d');
 
     if(chartGlicemia) chartGlicemia.destroy();
+
+    if(json.data.length === 0){
+        alert("Nenhum dado de glicemia encontrado para esse paciente!");
+        return;
+    }
 
     chartGlicemia = new Chart(ctx,{
         type:'line',
